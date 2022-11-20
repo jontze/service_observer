@@ -200,6 +200,9 @@ dependencies = [
 [[package]]
 name = "sshd_logs"
 version = "0.1.0"
+dependencies = [
+ "journal_parser",
+]
 
 [[package]]
 name = "syn"
