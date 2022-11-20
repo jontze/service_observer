@@ -1,14 +1,24 @@
-pub fn add(left: usize, right: usize) -> usize {
-    left + right
-}
+use journal_parser::models::LogOutput;
+
+pub trait SshdLogs {}
+
+impl SshdLogs for LogOutput {}
 
 #[cfg(test)]
 mod tests {
+    use journal_parser::journal::Journal;
+
     use super::*;
 
     #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
+    fn read_todays_logs() {
+        let output = Journal::with_service("sshd")
+            .since("today")
+            .build()
+            .read()
+            .unwrap();
+        for log in output.logs {
+            println!("{log:?}");
+        }
     }
 }
