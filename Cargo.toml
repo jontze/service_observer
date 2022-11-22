@@ -2,5 +2,5 @@
 members = [
     "journal_parser",
     "sshd_logs",
-    "sshd_observer"
+    "service_observer"
 ]

@@ -420,6 +420,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "service_observer"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "crossterm",
+ "journal_parser",
+ "sshd_logs",
+ "tui",
+]
+
+[[package]]
 name = "signal-hook"
 version = "0.3.14"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -463,17 +474,6 @@ dependencies = [
  "rayon",
  "regex",
  "thiserror",
-]
-
-[[package]]
-name = "sshd_observer"
-version = "0.1.0"
-dependencies = [
- "clap",
- "crossterm",
- "journal_parser",
- "sshd_logs",
- "tui",
 ]
 
 [[package]]
