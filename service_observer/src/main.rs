@@ -4,6 +4,10 @@ use crossterm::{
     execute,
     terminal::{disable_raw_mode, enable_raw_mode, EnterAlternateScreen, LeaveAlternateScreen},
 };
+use std::sync::{
+    atomic::{AtomicBool, Ordering},
+    Arc,
+};
 use tui::backend::Backend;
 use tui::{backend::CrosstermBackend, Terminal};
 
@@ -11,9 +15,16 @@ mod app;
 mod ui;
 
 fn run_app<B: Backend>(terminal: &mut Terminal<B>, mut app: App) -> std::io::Result<()> {
-    loop {
-        terminal.draw(|frame| ui::ui(frame, &mut app))?;
+    // To control the loop until CTRL+C
+    let is_terminated = Arc::new(AtomicBool::new(false));
+    let is_terminated_clone = is_terminated.clone();
+    ctrlc::set_handler(move || {
+        is_terminated_clone.store(true, Ordering::SeqCst);
+    })
+    .unwrap();
 
+    while !is_terminated.load(Ordering::SeqCst) {
+        terminal.draw(|frame| ui::ui(frame, &mut app))?;
         if let Event::Key(key) = event::read()? {
             match key.code {
                 KeyCode::Char('q') | KeyCode::Esc => return Ok(()),
@@ -25,6 +36,7 @@ fn run_app<B: Backend>(terminal: &mut Terminal<B>, mut app: App) -> std::io::Res
             }
         }
     }
+    Ok(())
 }
 
 fn main() {

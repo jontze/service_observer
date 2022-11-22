@@ -8,6 +8,7 @@ edition = "2021"
 [dependencies]
 clap = { version = "4.0.26", features = ["derive"] }
 crossterm = "0.25.0"
+ctrlc = "3.2.3"
 journal_parser ={ path = "../journal_parser"}
 sshd_logs ={ path = "../sshd_logs"}
 tui = "0.19.0"
