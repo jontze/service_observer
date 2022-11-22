@@ -44,7 +44,6 @@ impl SshdLogs for LogOutput {
             .reduce(
                 HashMap::<Ipv4Addr, Vec<&LogEntry>>::new,
                 |mut map_1, map_2| {
-                    println!("Map 2: {:?}", map_2);
                     map_2
                         .into_iter()
                         .for_each(|(addr, logs)| match map_1.get_mut(&addr) {
