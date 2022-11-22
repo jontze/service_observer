@@ -93,7 +93,7 @@ impl Parser for LogOutput {
     }
 }
 
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Deserialize, Serialize, Clone, PartialEq, Eq)]
 pub struct LogEntry {
     #[serde(rename(deserialize = "TID"))]
     pub tid: Option<String>,
