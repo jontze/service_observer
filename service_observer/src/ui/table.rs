@@ -6,7 +6,7 @@ use tui::{
     Frame,
 };
 
-use crate::app::app::App;
+use crate::app::App;
 
 pub(crate) fn table<B: Backend>(frame: &mut Frame<B>, area: Rect, app: &mut App) {
     let normal_style = Style::default().bg(Color::DarkGray);

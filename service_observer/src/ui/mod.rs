@@ -4,7 +4,7 @@ use tui::{
     Frame,
 };
 
-use crate::app::app::App;
+use crate::app::App;
 
 use self::tab::tabs;
 
