@@ -14,6 +14,7 @@ use tui::{backend::CrosstermBackend, Terminal};
 mod app;
 mod events;
 mod ui;
+mod util;
 
 fn run_app<B: Backend>(terminal: &mut Terminal<B>, mut app: App) -> std::io::Result<()> {
     // To control the loop until CTRL+C
