@@ -1,10 +1,9 @@
+use super::args::Args;
 use clap::Parser;
 use journal_parser::{journal::Journal, models::LogEntry};
 use sshd_logs::SshdLogs;
 use std::net::Ipv4Addr;
 use tui::widgets::TableState;
-
-use super::args::Args;
 
 pub(crate) struct App {
     args: Args,
