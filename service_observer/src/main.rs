@@ -12,6 +12,7 @@ use tui::backend::Backend;
 use tui::{backend::CrosstermBackend, Terminal};
 
 mod app;
+mod events;
 mod ui;
 
 fn run_app<B: Backend>(terminal: &mut Terminal<B>, mut app: App) -> std::io::Result<()> {
