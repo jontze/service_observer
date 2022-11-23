@@ -1,10 +1,9 @@
 use tui::{
     backend::Backend,
     layout::Rect,
-    style::{Color, Style},
-    text::Span,
+    style::Color,
     widgets::{
-        canvas::{Canvas, Map, MapResolution},
+        canvas::{Canvas, Map, MapResolution, Points},
         Block, Borders,
     },
     Frame,
@@ -19,13 +18,13 @@ pub(crate) fn map<B: Backend>(frame: &mut Frame<B>, area: Rect) {
         .paint(|ctx| {
             ctx.draw(&Map {
                 color: Color::White,
-                resolution: MapResolution::High,
+                resolution: MapResolution::Low,
             });
-            ctx.print(
-                0.0,
-                0.0,
-                Span::styled("You are here", Style::default().fg(Color::Yellow)),
-            );
+            ctx.layer();
+            ctx.draw(&Points {
+                coords: &[(13.0, 52.0), (0.0, 0.0)],
+                color: Color::Red,
+            });
         });
     frame.render_widget(canvas, area);
 }
