@@ -2,5 +2,6 @@
 members = [
     "journal_parser",
     "sshd_logs",
-    "service_observer"
+    "service_observer",
+    "ip_geolocation"
 ]
