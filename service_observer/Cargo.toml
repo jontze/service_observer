@@ -12,3 +12,5 @@ ctrlc = "3.2.3"
 journal_parser ={ path = "../journal_parser"}
 sshd_logs ={ path = "../sshd_logs"}
 tui = "0.19.0"
+config = "0.13.1"
+dirs = "4.0.0"

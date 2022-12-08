@@ -1,3 +1,4 @@
+use self::config::ensure_app_files_exist;
 use args::Args;
 use clap::Parser;
 use journal_parser::{journal::Journal, models::LogEntry};
@@ -6,6 +7,7 @@ use std::net::Ipv4Addr;
 use tui::widgets::TableState;
 
 mod args;
+pub mod config;
 pub mod constants;
 
 pub(crate) struct App {
@@ -19,6 +21,7 @@ pub(crate) struct App {
 impl Default for App {
     fn default() -> Self {
         let args = Args::parse();
+        ensure_app_files_exist();
         let sshd_output = Journal::with_service("sshd")
             .since("yesterday")
             .no_pager()
