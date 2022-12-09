@@ -16,6 +16,7 @@ pub(crate) struct App {
     pub tab_index: usize,
     pub ssh_table_state: TableState,
     pub ssh_logs: Vec<(Ipv4Addr, Vec<LogEntry>, usize)>,
+    pub map_locations: Vec<(f64, f64)>,
 }
 
 impl Default for App {
@@ -52,6 +53,7 @@ impl Default for App {
             tab_index: 0,
             ssh_table_state: TableState::default(),
             ssh_logs,
+            map_locations: vec![],
         }
     }
 }
@@ -101,5 +103,13 @@ impl App {
             };
             self.ssh_table_state.select(Some(i));
         }
+    }
+
+    pub fn mut_ssh_logs(&self) -> Vec<(Ipv4Addr, Vec<LogEntry>, usize)> {
+        self.ssh_logs.to_owned()
+    }
+
+    pub fn add_geolocation(&mut self, lat: f64, lng: f64) {
+        self.map_locations.push((lat, lng));
     }
 }

@@ -4,6 +4,7 @@ use threaty::api::shodan::{shodan_api::ShodanAPI, shodan_client::ShodanClient};
 
 use crate::{Geolocation, IpScannerError};
 
+#[derive(Debug, Clone)]
 pub struct IpScanner {
     shodan_client: ShodanClient,
 }
@@ -15,9 +16,9 @@ impl<'a> IpScanner {
         }
     }
 
-    pub async fn ip_geolocation(self, ipv4: Ipv4Addr) -> Result<Geolocation, IpScannerError> {
+    pub async fn ip_geolocation(self, ipv4: &Ipv4Addr) -> Result<Geolocation, IpScannerError> {
         self.shodan_client
-            .host_info(ipv4.into(), None, None)
+            .host_info(ipv4.to_owned().into(), None, None)
             .send()
             .await
             .map_err(|_| IpScannerError::RequestError)?

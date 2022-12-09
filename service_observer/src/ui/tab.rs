@@ -43,7 +43,7 @@ pub(crate) fn tabs<B: Backend>(
             table(frame, body_area, app);
         }
         1 => {
-            map(frame, body_area);
+            map(frame, body_area, app);
         }
         _ => unreachable!(),
     };

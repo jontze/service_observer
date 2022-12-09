@@ -1,3 +1,4 @@
+use crate::app::App;
 use tui::{
     backend::Backend,
     layout::Rect,
@@ -9,7 +10,7 @@ use tui::{
     Frame,
 };
 
-pub(crate) fn map<B: Backend>(frame: &mut Frame<B>, area: Rect) {
+pub(crate) fn map<B: Backend>(frame: &mut Frame<B>, area: Rect, app: &mut App) {
     let block = Block::default().borders(Borders::ALL).title("Map");
     let canvas = Canvas::default()
         .block(block)
@@ -18,11 +19,11 @@ pub(crate) fn map<B: Backend>(frame: &mut Frame<B>, area: Rect) {
         .paint(|ctx| {
             ctx.draw(&Map {
                 color: Color::White,
-                resolution: MapResolution::Low,
+                resolution: MapResolution::High,
             });
             ctx.layer();
             ctx.draw(&Points {
-                coords: &[(13.0, 52.0), (0.0, 0.0)],
+                coords: &app.map_locations,
                 color: Color::Red,
             });
         });

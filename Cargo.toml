@@ -3,5 +3,10 @@ members = [
     "journal_parser",
     "sshd_logs",
     "service_observer",
-    "ip_geolocation"
+    "ip_geolocation",
+    "ip_geolocation_crawler"
 ]
+
+
+[patch.crates-io]
+threaty-rs = { git = "https://github.com/jontze/threaty-rs" }
