@@ -1,5 +1,5 @@
 [package]
-name = "ip_geolocation_crawler"
+name = "crawler"
 version = "0.1.0"
 edition = "2021"
 
@@ -8,6 +8,7 @@ edition = "2021"
 [dependencies]
 async-trait = "0.1.59"
 sea-orm = { version = "0.10.5", features = [ "sqlx-sqlite", "runtime-tokio-rustls", "macros" ] }
+ip_geolocation ={ path = "../ip_geolocation"}
 entity = { path = "../entity" }
 migration = { path = "../migration" }
 

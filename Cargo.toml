@@ -4,7 +4,7 @@ members = [
     "sshd_logs",
     "service_observer",
     "ip_geolocation",
-    "ip_geolocation_crawler",
+    "crawler",
     "migration",
     "entity"
 ]

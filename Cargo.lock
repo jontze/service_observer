@@ -452,6 +452,18 @@ dependencies = [
 ]
 
 [[package]]
+name = "crawler"
+version = "0.1.0"
+dependencies = [
+ "async-trait",
+ "entity",
+ "ip_geolocation",
+ "migration",
+ "sea-orm",
+ "tokio",
+]
+
+[[package]]
 name = "crc"
 version = "3.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1149,17 +1161,6 @@ dependencies = [
  "serde_json",
  "thiserror",
  "threaty-rs",
-]
-
-[[package]]
-name = "ip_geolocation_crawler"
-version = "0.1.0"
-dependencies = [
- "async-trait",
- "entity",
- "migration",
- "sea-orm",
- "tokio",
 ]
 
 [[package]]
@@ -2324,13 +2325,12 @@ dependencies = [
  "clap 4.0.29",
  "clokwerk",
  "config",
+ "crawler",
  "crossterm",
  "ctrlc",
  "dirs",
- "ip_geolocation",
  "journal_parser",
  "sshd_logs",
- "threaty-rs",
  "tokio",
  "tui",
 ]

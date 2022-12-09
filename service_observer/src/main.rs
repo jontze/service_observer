@@ -1,8 +1,9 @@
+use app::config::get_db_path;
 use app::{constants, App};
 use clokwerk::{AsyncScheduler, TimeUnits};
+use crawler::{AppCrawler, Crawler};
 use crossterm::event::{self, Event, KeyCode};
 use events::{IpGeolocation, ObserverEvents};
-use ip_geolocation::IpScanner;
 use std::sync::mpsc::{self, Receiver};
 use std::sync::Arc;
 use std::time::Duration;
@@ -65,18 +66,25 @@ async fn main() {
 
     // Create App and run
     let app = App::default();
+    let crawler = Arc::new(
+        Crawler::new(
+            &get_db_path().into_os_string().into_string().unwrap(),
+            "<token>",
+        )
+        .await,
+    );
     let ssh_logs = Arc::new(app.mut_ssh_logs());
     scheduler.every(1.seconds()).run(move || {
         let ssh_logs = ssh_logs.clone();
         let thread_sender = sender_arc.clone();
+        let thread_crawler = crawler.clone();
         async move {
-            let mut scanner = IpScanner::new("<token>");
             for (ip, _, _) in ssh_logs.iter() {
-                let geolocation = scanner.clone().ip_geolocation(&ip).await.unwrap();
+                let (lat, lng) = thread_crawler.geolocation(&ip).await;
                 thread_sender
                     .send(ObserverEvents::Geolocation(IpGeolocation {
-                        lat: geolocation.latitude,
-                        lng: geolocation.longitude,
+                        lat,
+                        lng,
                         ipv4: ip.to_owned(),
                     }))
                     .unwrap();

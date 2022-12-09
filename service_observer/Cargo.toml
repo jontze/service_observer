@@ -12,8 +12,7 @@ crossterm = "0.25.0"
 ctrlc = "3.2.3"
 journal_parser ={ path = "../journal_parser"}
 sshd_logs ={ path = "../sshd_logs"}
-ip_geolocation ={ path = "../ip_geolocation"}
-threaty-rs = "0.10.5"
+crawler = {path = "../crawler"}
 tokio = { version = "1.22.0", features = ["full", "sync"] }
 tui = "0.19.0"
 config = "0.13.1"
