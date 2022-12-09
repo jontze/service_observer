@@ -5,19 +5,20 @@ use sea_orm::entity::prelude::*;
 #[derive(Clone, Debug, PartialEq, DeriveEntityModel)]
 #[sea_orm(table_name = "geolocation")]
 pub struct Model {
-    #[sea_orm(primary_key, auto_increment = false)]
-    pub uuid: Option<String>,
+    #[sea_orm(primary_key)]
+    pub id: i32,
     pub latitude: f64,
     pub longitude: f64,
     pub created: String,
+    pub ip_id: i32,
 }
 
 #[derive(Copy, Clone, Debug, EnumIter, DeriveRelation)]
 pub enum Relation {
     #[sea_orm(
         belongs_to = "Entity",
-        from = "Column::Uuid",
-        to = "Column::IpUuid",
+        from = "Column::Id",
+        to = "Column::IpId",
         on_update = "NoAction",
         on_delete = "NoAction"
     )]
