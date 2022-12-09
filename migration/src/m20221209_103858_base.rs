@@ -27,7 +27,7 @@ mod ip_table {
     #[derive(Iden)]
     pub(crate) enum Ip {
         Table,
-        Uuid,
+        Id,
         Ipv4,
         Created,
         Updated,
@@ -37,7 +37,13 @@ mod ip_table {
         Table::create()
             .table(Ip::Table)
             .if_not_exists()
-            .col(ColumnDef::new(Ip::Uuid).uuid().not_null().primary_key())
+            .col(
+                ColumnDef::new(Ip::Id)
+                    .integer()
+                    .auto_increment()
+                    .not_null()
+                    .primary_key(),
+            )
             .col(ColumnDef::new(Ip::Ipv4).string().not_null())
             .col(
                 ColumnDef::new(Ip::Created)
@@ -58,13 +64,13 @@ mod geolocation_table {
     use super::ip_table::Ip;
     use sea_orm_migration::prelude::*;
 
-    const IP_FK_NAME: &'static str = "fk-ip_uuid";
+    const IP_FK_NAME: &'static str = "fk-ip_id";
 
     #[derive(Iden)]
     enum Geolocation {
         Table,
-        Uuid,
-        IpUuid,
+        Id,
+        IpId,
         Latitude,
         Longitude,
         Created,
@@ -74,7 +80,13 @@ mod geolocation_table {
         Table::create()
             .table(Geolocation::Table)
             .if_not_exists()
-            .col(ColumnDef::new(Geolocation::Uuid).uuid().primary_key())
+            .col(
+                ColumnDef::new(Geolocation::Id)
+                    .integer()
+                    .not_null()
+                    .auto_increment()
+                    .primary_key(),
+            )
             .col(ColumnDef::new(Geolocation::Latitude).double().not_null())
             .col(ColumnDef::new(Geolocation::Longitude).double().not_null())
             .col(
@@ -83,11 +95,12 @@ mod geolocation_table {
                     .not_null()
                     .extra("DEFAULT CURRENT_TIMESTAMP".to_owned()),
             )
+            .col(ColumnDef::new(Geolocation::IpId).integer().not_null())
             .foreign_key(
                 ForeignKey::create()
                     .name(IP_FK_NAME)
-                    .from(Ip::Table, Ip::Uuid)
-                    .to(Geolocation::Table, Geolocation::IpUuid),
+                    .from(Ip::Table, Ip::Id)
+                    .to(Geolocation::Table, Geolocation::IpId),
             )
             .to_owned()
     }
