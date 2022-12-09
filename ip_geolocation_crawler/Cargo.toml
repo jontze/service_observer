@@ -7,4 +7,9 @@ edition = "2021"
 
 [dependencies]
 async-trait = "0.1.59"
-sea-orm = { version = "^0", features = [ "sqlx-sqlite", "runtime-tokio-rustls", "macros" ] }
+sea-orm = { version = "0.10.5", features = [ "sqlx-sqlite", "runtime-tokio-rustls", "macros" ] }
+entity = { path = "../entity" }
+migration = { path = "../migration" }
+
+[dev-dependencies]
+tokio = { version = "1.22.0", features = ["full"] }
