@@ -80,14 +80,19 @@ async fn main() {
         let thread_crawler = crawler.clone();
         async move {
             for (ip, _, _) in ssh_logs.iter() {
-                let (lat, lng) = thread_crawler.geolocation(&ip).await;
-                thread_sender
-                    .send(ObserverEvents::Geolocation(IpGeolocation {
-                        lat,
-                        lng,
-                        ipv4: ip.to_owned(),
-                    }))
-                    .unwrap();
+                match thread_crawler.geolocation(&ip).await {
+                    Ok((lat, lng)) => {
+                        thread_sender
+                            .send(ObserverEvents::Geolocation(IpGeolocation {
+                                lat,
+                                lng,
+                                ipv4: ip.to_owned(),
+                            }))
+                            .unwrap();
+                    }
+                    // TODO: For now ignore errors, this should be logged somewhere
+                    Err(_) => {}
+                };
             }
         }
     });

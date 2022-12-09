@@ -460,6 +460,7 @@ dependencies = [
  "ip_geolocation",
  "migration",
  "sea-orm",
+ "thiserror",
  "tokio",
 ]
 

@@ -11,6 +11,7 @@ sea-orm = { version = "0.10.5", features = [ "sqlx-sqlite", "runtime-tokio-rustl
 ip_geolocation ={ path = "../ip_geolocation"}
 entity = { path = "../entity" }
 migration = { path = "../migration" }
+thiserror = "1.0.37"
 
 [dev-dependencies]
 tokio = { version = "1.22.0", features = ["full"] }

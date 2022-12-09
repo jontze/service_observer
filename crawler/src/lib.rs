@@ -6,6 +6,9 @@ use ip_geolocation::IpScanner;
 use migration::MigratorTrait;
 use sea_orm::{Database, DatabaseConnection};
 
+mod error;
+pub use error::CrawlerError;
+
 pub struct Crawler {
     db: DatabaseConnection,
     scanner: IpScanner,
@@ -14,7 +17,7 @@ pub struct Crawler {
 #[async_trait]
 pub trait AppCrawler {
     async fn new(database_path: &str, shodan_key: &str) -> Self;
-    async fn geolocation(&self, ipv4: &Ipv4Addr) -> (f64, f64);
+    async fn geolocation(&self, ipv4: &Ipv4Addr) -> Result<(f64, f64), CrawlerError>;
 }
 
 #[async_trait]
@@ -27,13 +30,13 @@ impl AppCrawler for Crawler {
         Self { db, scanner }
     }
 
-    async fn geolocation(&self, ipv4: &Ipv4Addr) -> (f64, f64) {
+    async fn geolocation(&self, ipv4: &Ipv4Addr) -> Result<(f64, f64), CrawlerError> {
         // TODO: Check if ip already in db and if an geolocation exists that is younger than 24h
         // --> If Exists -> take db saved location and return
         // else
         // Fetch geolocation --> Save in db and return value
-        let geolocation = self.scanner.clone().ip_geolocation(&ipv4).await.unwrap();
-        todo!()
+        let geolocation = self.scanner.clone().ip_geolocation(&ipv4).await?;
+        Ok((geolocation.latitude, geolocation.longitude))
     }
 }
 
