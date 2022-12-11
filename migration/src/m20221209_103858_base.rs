@@ -99,8 +99,8 @@ mod geolocation_table {
             .foreign_key(
                 ForeignKey::create()
                     .name(IP_FK_NAME)
-                    .from(Ip::Table, Ip::Id)
-                    .to(Geolocation::Table, Geolocation::IpId),
+                    .from(Geolocation::Table, Geolocation::IpId)
+                    .to(Ip::Table, Ip::Id),
             )
             .to_owned()
     }
