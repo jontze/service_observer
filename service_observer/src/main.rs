@@ -3,7 +3,7 @@ use app::{constants, App};
 use clokwerk::{AsyncScheduler, TimeUnits};
 use crawler::{AppCrawler, Crawler};
 use crossterm::event::{self, Event, KeyCode};
-use events::{IpGeolocation, ObserverEvents};
+use events::ObserverEvents;
 use std::sync::mpsc::{self, Receiver};
 use std::sync::Arc;
 use std::time::Duration;
@@ -41,9 +41,7 @@ fn run_app<B: Backend>(
             event_recevier.recv_timeout(Duration::from_millis(constants::APP_DRAW_TICK_RATE / 2))
         {
             match input_event {
-                ObserverEvents::Geolocation(location) => {
-                    app.add_geolocation(location.lat, location.lng)
-                }
+                ObserverEvents::Geolocation((lat, lng)) => app.add_geolocation(lat, lng),
             }
         }
         terminal.draw(|frame| ui::ui(frame, &mut app))?;
@@ -80,19 +78,13 @@ async fn main() {
         let thread_crawler = crawler.clone();
         async move {
             for (ip, _, _) in ssh_logs.iter() {
-                match thread_crawler.geolocation(&ip).await {
-                    Ok((lat, lng)) => {
-                        thread_sender
-                            .send(ObserverEvents::Geolocation(IpGeolocation {
-                                lat,
-                                lng,
-                                ipv4: ip.to_owned(),
-                            }))
-                            .unwrap();
-                    }
+                if let Ok((lat, lng)) = thread_crawler.geolocation(ip).await {
+                    thread_sender
+                        .send(ObserverEvents::Geolocation((lat, lng)))
+                        .unwrap();
+                } else {
                     // TODO: For now ignore errors, this should be logged somewhere
-                    Err(_) => {}
-                };
+                }
             }
         }
     });

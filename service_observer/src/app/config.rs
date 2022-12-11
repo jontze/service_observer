@@ -24,13 +24,13 @@ pub(crate) fn get_config_path() -> PathBuf {
 
 fn get_config_dir() -> PathBuf {
     let mut config_file_path = dirs::config_dir().expect("Unable to get user config path");
-    config_file_path.push(&APP_NAME);
+    config_file_path.push(APP_NAME);
     config_file_path
 }
 
 fn get_db_dir() -> PathBuf {
     let mut data_file_path = dirs::data_dir().expect("Unable to get user data path");
-    data_file_path.push(&APP_NAME);
+    data_file_path.push(APP_NAME);
     data_file_path
 }
 

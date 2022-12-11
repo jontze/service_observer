@@ -25,7 +25,7 @@ impl MigrationTrait for Migration {
 mod ip_table {
     use sea_orm_migration::prelude::*;
 
-    const IP_INDEX_NAME: &'static str = "idx-ipv4-id";
+    const IP_INDEX_NAME: &str = "idx-ipv4-id";
 
     #[derive(Iden)]
     pub(crate) enum Ip {
@@ -75,7 +75,7 @@ mod geolocation_table {
     use super::ip_table::Ip;
     use sea_orm_migration::prelude::*;
 
-    const IP_FK_NAME: &'static str = "fk-ip_id";
+    const IP_FK_NAME: &str = "fk-ip_id";
 
     #[derive(Iden)]
     enum Geolocation {

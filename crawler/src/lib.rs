@@ -59,7 +59,7 @@ impl AppCrawler for Crawler {
             Ok((latitude.to_owned(), longitude.to_owned()))
         } else {
             // If not saved, fetch and save ip with geolocations
-            let fetched_geolocation = self.scanner.clone().ip_geolocation(&ipv4).await?;
+            let fetched_geolocation = self.scanner.clone().ip_geolocation(ipv4).await?;
             let ip_to_save = ip::ActiveModel {
                 ipv4: ActiveValue::Set(ipv4.to_string()),
                 ..Default::default()
@@ -74,23 +74,5 @@ impl AppCrawler for Crawler {
             let saved_location = location_to_save.insert(&self.db).await?;
             Ok((saved_location.latitude, saved_location.longitude))
         }
-    }
-}
-
-#[cfg(test)]
-mod test {
-    use std::net::Ipv4Addr;
-
-    use crate::{AppCrawler, Crawler};
-
-    #[tokio::test]
-    async fn test_connection() {
-        let path = "/home/jontze/.local/share/service_observer/data.sqlite";
-        // let crawler = Crawler::new(path, &std::env::var("SHODAN_TOKEN").unwrap()).await;
-        // let ret = crawler
-        //     .geolocation(&Ipv4Addr::new(49, 51, 19, 172))
-        //     .await
-        //     .unwrap();
-        // println!("{ret:#?}")
     }
 }
