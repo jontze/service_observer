@@ -461,7 +461,6 @@ dependencies = [
  "migration",
  "sea-orm",
  "thiserror",
- "tokio",
 ]
 
 [[package]]

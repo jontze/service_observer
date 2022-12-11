@@ -12,6 +12,3 @@ ip_geolocation ={ path = "../ip_geolocation"}
 entity = { path = "../entity" }
 migration = { path = "../migration" }
 thiserror = "1.0.37"
-
-[dev-dependencies]
-tokio = { version = "1.22.0", features = ["full"] }
