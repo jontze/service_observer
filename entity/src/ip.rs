@@ -13,6 +13,15 @@ pub struct Model {
 }
 
 #[derive(Copy, Clone, Debug, EnumIter, DeriveRelation)]
-pub enum Relation {}
+pub enum Relation {
+    #[sea_orm(has_many = "super::geolocation::Entity")]
+    Geolocation,
+}
+
+impl Related<super::geolocation::Entity> for Entity {
+    fn to() -> RelationDef {
+        Relation::Geolocation.def()
+    }
+}
 
 impl ActiveModelBehavior for ActiveModel {}
