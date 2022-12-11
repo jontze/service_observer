@@ -13,6 +13,7 @@ impl MigrationTrait for Migration {
 
     async fn down(&self, manager: &SchemaManager) -> Result<(), DbErr> {
         manager.drop_table(ip_table::drop()).await?;
+        manager.drop_index(ip_table::drop_index()).await?;
         manager.drop_table(geolocation_table::drop()).await?;
         manager
             .drop_foreign_key(geolocation_table::drop_fk())
@@ -23,6 +24,8 @@ impl MigrationTrait for Migration {
 
 mod ip_table {
     use sea_orm_migration::prelude::*;
+
+    const IP_INDEX_NAME: &'static str = "idx-ipv4-id";
 
     #[derive(Iden)]
     pub(crate) enum Ip {
@@ -44,7 +47,7 @@ mod ip_table {
                     .not_null()
                     .primary_key(),
             )
-            .col(ColumnDef::new(Ip::Ipv4).string().not_null())
+            .col(ColumnDef::new(Ip::Ipv4).string().not_null().unique_key())
             .col(
                 ColumnDef::new(Ip::Created)
                     .date_time()
@@ -52,11 +55,19 @@ mod ip_table {
                     .extra("DEFAULT CURRENT_TIMESTAMP".to_owned()),
             )
             .col(ColumnDef::new(Ip::Updated).date_time())
+            .index(Index::create().unique().name(IP_INDEX_NAME).col(Ip::Ipv4))
             .to_owned()
     }
 
     pub(crate) fn drop() -> TableDropStatement {
-        Table::drop().table(Ip::Table).to_owned()
+        Table::drop().if_exists().table(Ip::Table).to_owned()
+    }
+
+    pub(crate) fn drop_index() -> IndexDropStatement {
+        Index::drop()
+            .table(Ip::Table)
+            .name(IP_INDEX_NAME)
+            .to_owned()
     }
 }
 
@@ -106,7 +117,10 @@ mod geolocation_table {
     }
 
     pub(crate) fn drop() -> TableDropStatement {
-        Table::drop().table(Geolocation::Table).to_owned()
+        Table::drop()
+            .if_exists()
+            .table(Geolocation::Table)
+            .to_owned()
     }
 
     pub(crate) fn drop_fk() -> ForeignKeyDropStatement {
