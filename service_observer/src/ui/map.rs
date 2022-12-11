@@ -22,8 +22,14 @@ pub(crate) fn map<B: Backend>(frame: &mut Frame<B>, area: Rect, app: &mut App) {
                 resolution: MapResolution::High,
             });
             ctx.layer();
+            // The point struct expect (Longitude, Latitude)
+            let reversed_coords: Vec<(f64, f64)> = app
+                .map_locations
+                .iter()
+                .map(|(lat, lng)| (*lng, *lat))
+                .collect();
             ctx.draw(&Points {
-                coords: &app.map_locations,
+                coords: &reversed_coords,
                 color: Color::Red,
             });
         });
