@@ -2,7 +2,6 @@ use crate::app::App;
 use tui::{
     backend::Backend,
     layout::Rect,
-    style::Color,
     widgets::{
         canvas::{Canvas, Map, MapResolution, Points},
         Block, Borders,
@@ -18,7 +17,7 @@ pub(crate) fn map<B: Backend>(frame: &mut Frame<B>, area: Rect, app: &mut App) {
         .y_bounds([-90.0, 90.0])
         .paint(|ctx| {
             ctx.draw(&Map {
-                color: Color::White,
+                color: app.settings.ui.primary_color,
                 resolution: MapResolution::High,
             });
             ctx.layer();
@@ -30,7 +29,7 @@ pub(crate) fn map<B: Backend>(frame: &mut Frame<B>, area: Rect, app: &mut App) {
                 .collect();
             ctx.draw(&Points {
                 coords: &reversed_coords,
-                color: Color::Red,
+                color: app.settings.ui.accent_color,
             });
         });
     frame.render_widget(canvas, area);

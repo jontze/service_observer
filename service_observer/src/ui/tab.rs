@@ -1,7 +1,7 @@
 use tui::{
     backend::Backend,
     layout::Rect,
-    style::{Color, Modifier, Style},
+    style::{Modifier, Style},
     text::{Span, Spans},
     widgets::{Block, Borders, Tabs},
     Frame,
@@ -23,15 +23,15 @@ pub(crate) fn tabs<B: Backend>(
         .map(|title_str| {
             let (first, rest) = title_str.split_at(1);
             Spans::from(vec![
-                Span::styled(first, Style::default().fg(Color::Yellow)),
-                Span::styled(rest, Style::default().fg(Color::Green)),
+                Span::styled(first, Style::default().fg(app.settings.ui.accent_color)),
+                Span::styled(rest, Style::default().fg(app.settings.ui.primary_color)),
             ])
         })
         .collect();
-    let tab_style = Style::default().fg(Color::Cyan);
+    let tab_style = Style::default().fg(app.settings.ui.primary_color);
     let tab_highlight = Style::default()
         .add_modifier(Modifier::BOLD)
-        .bg(Color::Black);
+        .bg(app.settings.ui.secondary_color);
     let tabs = Tabs::new(titels)
         .block(Block::default().title("Tabs").borders(Borders::ALL))
         .select(app.tab_index)

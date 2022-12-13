@@ -1,7 +1,7 @@
 use tui::{
     backend::Backend,
     layout::{Constraint, Rect},
-    style::{Color, Modifier, Style},
+    style::{Modifier, Style},
     widgets::{Block, Borders, Row, Table},
     Frame,
 };
@@ -9,7 +9,7 @@ use tui::{
 use crate::app::App;
 
 pub(crate) fn table<B: Backend>(frame: &mut Frame<B>, area: Rect, app: &mut App) {
-    let normal_style = Style::default().bg(Color::DarkGray);
+    let normal_style = Style::default().bg(app.settings.ui.secondary_color);
     let selected_style = Style::default().add_modifier(Modifier::UNDERLINED);
     let header = Row::new(vec!["IP", "Amount of Logs"])
         .height(1)
