@@ -1,4 +1,4 @@
-use self::config::ensure_app_files_exist;
+use self::config::{ensure_app_files_exist, Settings};
 use args::Args;
 use clap::Parser;
 use journal_parser::{journal::Journal, models::LogEntry};
@@ -11,7 +11,8 @@ pub mod config;
 pub mod constants;
 
 pub(crate) struct App {
-    args: Args,
+    pub args: Args,
+    pub settings: Settings,
     pub tab_titles: Vec<&'static str>,
     pub tab_index: usize,
     pub ssh_table_state: TableState,
@@ -22,6 +23,7 @@ pub(crate) struct App {
 impl Default for App {
     fn default() -> Self {
         let args = Args::parse();
+        let settings = Settings::new();
         ensure_app_files_exist();
         let sshd_output = Journal::with_service("sshd")
             .since("yesterday")
@@ -49,6 +51,7 @@ impl Default for App {
         ssh_logs.sort_by(|(_, _, amount_1), (_, _, amount_2)| amount_2.cmp(amount_1));
         Self {
             args,
+            settings,
             tab_titles: vec!["SSH Logs", "Map"],
             tab_index: 0,
             ssh_table_state: TableState::default(),
