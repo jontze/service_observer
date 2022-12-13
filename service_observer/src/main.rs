@@ -67,7 +67,7 @@ async fn main() {
     let crawler = Arc::new(
         Crawler::new(
             &get_db_path().into_os_string().into_string().unwrap(),
-            &std::env::var("SHODAN_TOKEN").expect("Missing shodan token"),
+            &app.settings.crawler.shodan_token,
         )
         .await,
     );
