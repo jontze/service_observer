@@ -2,7 +2,7 @@ use ratatui::{
     backend::Backend,
     layout::Rect,
     style::{Modifier, Style},
-    text::{Span, Spans},
+    text::{Line, Span},
     widgets::{Block, Borders, Tabs},
     Frame,
 };
@@ -22,7 +22,7 @@ pub(crate) fn tabs<B: Backend>(
         .iter()
         .map(|title_str| {
             let (first, rest) = title_str.split_at(1);
-            Spans::from(vec![
+            Line::from(vec![
                 Span::styled(first, Style::default().fg(app.settings.ui.accent_color)),
                 Span::styled(rest, Style::default().fg(app.settings.ui.primary_color)),
             ])

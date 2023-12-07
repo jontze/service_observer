@@ -59,7 +59,7 @@ impl AppCrawler for Crawler {
             Ok((latitude.to_owned(), longitude.to_owned()))
         } else {
             // If not saved, fetch and save ip with geolocations
-            let fetched_geolocation = self.scanner.clone().ip_geolocation(ipv4).await?;
+            let fetched_geolocation = self.scanner.ip_geolocation(ipv4).await?;
             let ip_to_save = ip::ActiveModel {
                 ipv4: ActiveValue::Set(ipv4.to_string()),
                 ..Default::default()

@@ -16,8 +16,9 @@ impl<'a> IpScanner {
         }
     }
 
-    pub async fn ip_geolocation(self, ipv4: &Ipv4Addr) -> Result<Geolocation, IpScannerError> {
+    pub async fn ip_geolocation(&self, ipv4: &Ipv4Addr) -> Result<Geolocation, IpScannerError> {
         self.shodan_client
+            .clone()
             .host_info(ipv4.to_owned().into(), None, None)
             .send()
             .await
