@@ -6,9 +6,9 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-async-trait = "0.1.59"
-sea-orm = { version = "0.10.5", features = [ "sqlx-sqlite", "runtime-tokio-rustls", "macros" ] }
+async-trait = "0.1.74"
+sea-orm = { version = "0.12.8", features = [ "sqlx-sqlite", "runtime-tokio-rustls", "macros" ] }
 ip_geolocation ={ path = "../ip_geolocation"}
 entity = { path = "../entity" }
 migration = { path = "../migration" }
-thiserror = "1.0.37"
+thiserror = "1.0.50"

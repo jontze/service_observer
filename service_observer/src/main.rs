@@ -4,11 +4,11 @@ use clokwerk::{AsyncScheduler, TimeUnits};
 use crawler::{AppCrawler, Crawler};
 use crossterm::event::{self, Event, KeyCode};
 use events::ObserverEvents;
+use ratatui::backend::Backend;
+use ratatui::{backend::CrosstermBackend, Terminal};
 use std::sync::mpsc::{self, Receiver};
 use std::sync::Arc;
 use std::time::Duration;
-use tui::backend::Backend;
-use tui::{backend::CrosstermBackend, Terminal};
 
 mod app;
 mod events;

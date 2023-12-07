@@ -129,7 +129,7 @@ mod tests {
     use super::*;
 
     const LOG_AMOUNT: usize = 5;
-    const LOG_SERVICE: &'static str = "sshd";
+    const LOG_SERVICE: &str = "sshd";
 
     #[test]
     fn should_read_from_journal() {

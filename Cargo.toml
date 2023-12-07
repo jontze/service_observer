@@ -9,6 +9,8 @@ members = [
     "entity"
 ]
 
+resolver = "2"
+
 
 [patch.crates-io]
 threaty-rs = { git = "https://github.com/jontze/threaty-rs" }

@@ -3,8 +3,8 @@ use crossterm::{
     execute,
     terminal::{disable_raw_mode, enable_raw_mode, EnterAlternateScreen, LeaveAlternateScreen},
 };
+use ratatui::{backend::CrosstermBackend, Terminal};
 use std::io::Stdout;
-use tui::{backend::CrosstermBackend, Terminal};
 
 pub(crate) fn setup_terminal() -> std::io::Result<Stdout> {
     enable_raw_mode()?;

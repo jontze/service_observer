@@ -74,6 +74,6 @@ mod tests {
             .read()
             .unwrap();
         let ip_hash = output.by_ips().unwrap();
-        assert!(ip_hash.len() > 0);
+        assert!(!ip_hash.is_empty());
     }
 }

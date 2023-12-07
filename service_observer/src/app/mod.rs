@@ -2,9 +2,9 @@ use self::config::{ensure_app_files_exist, Settings};
 use args::Args;
 use clap::Parser;
 use journal_parser::{journal::Journal, models::LogEntry};
+use ratatui::widgets::TableState;
 use sshd_logs::SshdLogs;
 use std::net::Ipv4Addr;
-use tui::widgets::TableState;
 
 mod args;
 pub mod config;
